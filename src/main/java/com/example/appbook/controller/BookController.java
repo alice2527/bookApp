@@ -20,6 +20,11 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/sortedByRating/{asc}")
+    public List<Book> getAllBooksByRating(@PathVariable String asc) {
+        return bookService.getAllBooksSortByRatings(asc);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Book book = bookService.getBookById(id);

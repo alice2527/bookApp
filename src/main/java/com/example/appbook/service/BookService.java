@@ -18,6 +18,16 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getAllBooksSortByRatings(String asc) {
+
+        if (asc.equals("asc")) {
+            return bookRepository.findAllByOrderByRatingDesc();
+
+        } else {
+            return bookRepository.findAllByOrderByRatingAsc();
+        }
+    }
+
     public Book getBookById(Long id) {
         return bookRepository.findById(id).orElse(null);
     }
