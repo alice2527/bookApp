@@ -22,6 +22,18 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
+    public List<Book> getBookByAuthor(String author) {
+        List<Book> books = bookRepository.findByAuthor(author);
+        System.out.println("Books found for author " + author + ": " + books.size());
+        return books;
+    }
+
+    public List<Book> getBookByType(String type) {
+        List<Book> books = bookRepository.findByType(type);
+        System.out.println("Books found for type " + type + ": " + books.size());
+        return books;
+    }
+
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }

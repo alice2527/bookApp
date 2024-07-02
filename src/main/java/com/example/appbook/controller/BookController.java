@@ -29,6 +29,17 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
+    @GetMapping("/author/{author}")
+    public List<Book> getBooksByAuthor(@PathVariable String author) {
+        return bookService.getBookByAuthor(author);
+    }
+
+    @GetMapping("/type/{type}")
+    public List<Book> getBooksByType(@PathVariable String type) {
+        return bookService.getBookByType(type);
+    }
+
+
     @PostMapping
     public Book createBook(@RequestBody Book book) {
         return bookService.saveBook(book);
