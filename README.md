@@ -23,11 +23,11 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 L'API REST de l'application expose les endpoints suivants pour gérer les livres :
 
--GET /api/books : Récupérer tous les livres.
--GET /api/books/{id} : Récupérer un livre par son ID.
--GET /api/books/author/{author} : Récupérer les livres d'un auteur spécifique.
--GET /api/books/type/{type} : Récupérer les livres d'un auteur spécifique.
--POST /api/books : Créer un nouveau livre.
--PUT /api/books/{id} : Mettre à jour un livre existant par son ID.
--PATCH /api/books/{id} : Mettre à jour partiellement un livre par son ID.
--DELETE /api/books/{id} : Supprimer un livre par son ID.
+- GET /api/books : Récupérer tous les livres.
+- GET /api/books/{id} : Récupérer un livre par son ID.
+- GET /api/books/author/{author} : Récupérer les livres d'un auteur spécifique.
+- GET /api/books/type/{type} : Récupérer les livres d'un auteur spécifique.
+- POST /api/books : Créer un nouveau livre.
+- PUT /api/books/{id} : Mettre à jour un livre existant par son ID.
+- PATCH /api/books/{id} : Mettre à jour partiellement un livre par son ID.
+- DELETE /api/books/{id} : Supprimer un livre par son ID.
