@@ -3,8 +3,15 @@ import axios from 'axios';
 import {Book} from "../Model/Book";
 import './BookCatalog.css'
 import BookCard from "../Molecule/BookCard";
+import {useNavigate} from "react-router-dom";
 
 const BookCatalog: React.FC = () => {
+    const navigate = useNavigate();
+
+    const handleCreateBook = () => {
+        navigate('/create-book') // Redirige vers la page de création de livre
+    };
+
     const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
@@ -23,7 +30,7 @@ const BookCatalog: React.FC = () => {
 
     return (
         <div className="book-catalog">
-            <h2>Book List</h2>
+            <button onClick={handleCreateBook} className="catalog-button">Create New Book</button>
             <div className="book-catalog-grid">
                 {books.map((book) => (
                     <BookCard key={book.id} book={book}/>

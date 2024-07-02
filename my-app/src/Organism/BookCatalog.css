@@ -4,12 +4,16 @@
     margin: 0 auto;
 }
 
-.book-catalog h2 {
-    text-align: center;
-}
 
 .book-catalog-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+}
+
+.catalog-button {
+    background-color: #564787;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
 }

@@ -77,12 +77,12 @@ public class BookService {
         Optional.ofNullable(bookDetails.getIsbn()).ifPresent(existingBook::setIsbn);
         Optional.ofNullable(bookDetails.getType()).ifPresent(existingBook::setType);
         Optional.ofNullable(bookDetails.getImageUrl()).ifPresent(existingBook::setImageUrl);
-        if (bookDetails.getRating() != 0) { // Assuming rating is 0 if not set
+        if (bookDetails.getRating() != 0) {
             existingBook.setRating(bookDetails.getRating());
         }
         Optional.ofNullable(bookDetails.getDescription()).ifPresent(existingBook::setDescription);
 
-        return bookRepository.save(existingBook); // Save the updated book entity
+        return bookRepository.save(existingBook);
     }
 
     public void deleteBook(Long id) {
