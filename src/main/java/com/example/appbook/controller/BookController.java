@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -46,26 +45,11 @@ public class BookController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> PatchBook(@PathVariable Long id, @RequestBody Book bookDetails) {
-        Book existingBook = bookService.getBookById(id);
-        if (existingBook == null) {
+        Book book = bookService.patchBook(id, bookDetails);
+        if (book == null) {
             return ResponseEntity.notFound().build();
         }
-
-        Optional.ofNullable(bookDetails.getTitle()).ifPresent(existingBook::setTitle);
-        Optional.ofNullable(bookDetails.getAuthor()).ifPresent(existingBook::setAuthor);
-        Optional.ofNullable(bookDetails.getPublisher()).ifPresent(existingBook::setPublisher);
-        Optional.ofNullable(bookDetails.getPublishedDate()).ifPresent(existingBook::setPublishedDate);
-        Optional.ofNullable(bookDetails.getIsbn()).ifPresent(existingBook::setIsbn);
-        Optional.ofNullable(bookDetails.getType()).ifPresent(existingBook::setType);
-        Optional.ofNullable(bookDetails.getImageUrl()).ifPresent(existingBook::setImageUrl);
-        if (bookDetails.getRating() != 0) { // Assuming rating is 0 if not set
-            existingBook.setRating(bookDetails.getRating());
-        }
-        Optional.ofNullable(bookDetails.getDescription()).ifPresent(existingBook::setDescription);
-
-        bookService.saveBook(existingBook); // Save the updated book entity
-
-        return ResponseEntity.ok(existingBook);
+        return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")

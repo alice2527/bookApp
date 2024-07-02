@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -38,6 +39,28 @@ public class BookService {
             return bookRepository.save(book);
         }
         return null;
+    }
+
+    public Book patchBook(Long id, Book bookDetails) {
+
+        Book existingBook = bookRepository.findById(id).orElse(null);
+        if (existingBook == null) {
+            return null;
+        }
+
+        Optional.ofNullable(bookDetails.getTitle()).ifPresent(existingBook::setTitle);
+        Optional.ofNullable(bookDetails.getAuthor()).ifPresent(existingBook::setAuthor);
+        Optional.ofNullable(bookDetails.getPublisher()).ifPresent(existingBook::setPublisher);
+        Optional.ofNullable(bookDetails.getPublishedDate()).ifPresent(existingBook::setPublishedDate);
+        Optional.ofNullable(bookDetails.getIsbn()).ifPresent(existingBook::setIsbn);
+        Optional.ofNullable(bookDetails.getType()).ifPresent(existingBook::setType);
+        Optional.ofNullable(bookDetails.getImageUrl()).ifPresent(existingBook::setImageUrl);
+        if (bookDetails.getRating() != 0) { // Assuming rating is 0 if not set
+            existingBook.setRating(bookDetails.getRating());
+        }
+        Optional.ofNullable(bookDetails.getDescription()).ifPresent(existingBook::setDescription);
+
+        return bookRepository.save(existingBook); // Save the updated book entity
     }
 
     public void deleteBook(Long id) {
