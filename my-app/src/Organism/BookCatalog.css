@@ -1,0 +1,15 @@
+.book-catalog {
+    padding: 1rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.book-catalog h2 {
+    text-align: center;
+}
+
+.book-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}

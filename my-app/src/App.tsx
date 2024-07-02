@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
 import BookCatalog from "./Organism/BookCatalog";
+import './App.css';
 
 function App() {
     return (
-        <BookCatalog></BookCatalog>
+        <div className="app-container">
+            <BookCatalog/>
+        </div>
     );
 }
 

@@ -1,18 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-
-interface Book {
-    id: number;
-    title: string;
-    author: string;
-    publisher: string;
-    publishedDate: string;
-    isbn: string;
-    type: string;
-    imageUrl: string;
-    rating: number;
-    description: string;
-}
+import {Book} from "../Model/Book";
+import './BookCatalog.css'
+import BookCard from "../Molecule/BookCard";
 
 const BookCatalog: React.FC = () => {
     const [books, setBooks] = useState<Book[]>([]);
@@ -21,7 +11,7 @@ const BookCatalog: React.FC = () => {
         const fetchBooks = async () => {
             try {
                 const response = await axios.get<Book[]>('http://localhost:8080/api/books');
-                console.log(response)
+                console.log(response);
                 setBooks(response.data);
             } catch (error) {
                 console.error('Error fetching books:', error);
@@ -32,23 +22,13 @@ const BookCatalog: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div className="book-catalog">
             <h2>Book List</h2>
-            <ul>
-                {books.map(book => (
-                    <li key={book.id}>
-                        <div>Title: {book.title}</div>
-                        <div>Author: {book.author}</div>
-                        <div>Publisher: {book.publisher}</div>
-                        <div>Published Date: {book.publishedDate}</div>
-                        <div>ISBN: {book.isbn}</div>
-                        <div>Type: {book.type}</div>
-                        <div>Image URL: {book.imageUrl}</div>
-                        <div>Rating: {book.rating}</div>
-                        <div>Description: {book.description}</div>
-                    </li>
+            <div className="book-catalog-grid">
+                {books.map((book) => (
+                    <BookCard key={book.id} book={book}/>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
