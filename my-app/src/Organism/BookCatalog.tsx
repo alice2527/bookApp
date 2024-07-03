@@ -8,28 +8,26 @@ import BookModal from "../Molecule/BookModal";
 
 const BookCatalog: React.FC = () => {
     const navigate = useNavigate();
-
     const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    const handleCreateBook = () => {
-        navigate('/create-book'); // Redirige vers la page de création de livre
-    };
-
     const [books, setBooks] = useState<Book[]>([]);
 
-    useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                const response = await axios.get<Book[]>('http://localhost:8080/api/books');
-                setBooks(response.data);
-            } catch (error) {
-                console.error('Error fetching books:', error);
-            }
-        };
+    const fetchBooks = async () => {
+        try {
+            const response = await axios.get<Book[]>('http://localhost:8080/api/books');
+            setBooks(response.data);
+        } catch (error) {
+            console.error('Error fetching books:', error);
+        }
+    };
 
+    useEffect(() => {
         fetchBooks();
     }, []);
+
+    const handleCreateBook = () => {
+        navigate('/create-book'); // Redirect to the create book page
+    };
 
     const openModal = (id: number) => {
         setSelectedBookId(id);
@@ -39,6 +37,11 @@ const BookCatalog: React.FC = () => {
     const closeModal = () => {
         setSelectedBookId(null);
         setModalIsOpen(false);
+    };
+
+    const handleBookDeleted = () => {
+        closeModal();
+        fetchBooks(); // Refresh the book list after a book is deleted
     };
 
     return (
@@ -51,7 +54,8 @@ const BookCatalog: React.FC = () => {
                     </div>
                 ))}
             </div>
-            <BookModal isOpen={modalIsOpen} onRequestClose={closeModal} bookId={selectedBookId}/>
+            <BookModal isOpen={modalIsOpen} onRequestClose={closeModal} bookId={selectedBookId}
+                       onBookDeleted={handleBookDeleted}/>
         </div>
     );
 };

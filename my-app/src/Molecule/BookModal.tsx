@@ -7,9 +7,10 @@ interface BookModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
     bookId: number | null;
+    onBookDeleted: () => void; // Callback function for when a book is deleted
 }
 
-const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId}) => {
+const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, onBookDeleted}) => {
     const [book, setBook] = useState<Book | null>(null);
 
     useEffect(() => {
@@ -25,6 +26,17 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId}) =
         };
         fetchBook();
     }, [bookId, isOpen]);
+
+    const handleDelete = async () => {
+        if (bookId) {
+            try {
+                await axios.delete(`http://localhost:8080/api/books/${bookId}`);
+                onBookDeleted(); // Call the callback function to update the book list
+            } catch (error) {
+                console.error('Error deleting book:', error);
+            }
+        }
+    };
 
     if (!book || !isOpen) return null;
 
@@ -48,6 +60,9 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId}) =
                         <div>Rating: {book.rating}</div>
                         <div>Description: {book.description}</div>
                     </div>
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-delete" onClick={handleDelete}>Delete</button>
                 </div>
             </div>
         </div>
