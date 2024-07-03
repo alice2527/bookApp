@@ -1,7 +1,7 @@
 import React from 'react';
 import BookCatalog from "./Organism/BookCatalog";
 import './App.css';
-
+import '@smastrom/react-rating/style.css'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import CreateBookForm from "./Organism/CreateBookForm";
 

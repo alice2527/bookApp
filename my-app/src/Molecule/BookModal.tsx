@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Book} from '../Model/Book';
 import './BookModal.css';
 import axios from "axios";
+import {Rating} from "@smastrom/react-rating";
 
 interface BookModalProps {
     isOpen: boolean;
@@ -45,6 +46,8 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <h2>{book.title}</h2>
+
+                    <Rating style={{maxWidth: 100}} value={book.rating}/>
                     <button className="modal-close" onClick={onRequestClose}>X</button>
                 </div>
                 <div className="modal-body">
@@ -57,7 +60,6 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
                         <div>Published Date: {new Date(book.publishedDate).toLocaleDateString()}</div>
                         <div>ISBN: {book.isbn}</div>
                         <div>Type: {book.type}</div>
-                        <div>Rating: {book.rating}</div>
                         <div>Description: {book.description}</div>
                     </div>
                 </div>
