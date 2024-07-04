@@ -1,4 +1,4 @@
-# Application de Gestion de Livres
+# Application de Gestion de Livres (projet en cours)
 
 Cette application Spring Boot permet de gérer une bibliothèque de livres, avec des fonctionnalités pour créer, mettre à jour, supprimer et récupérer des livres à partir d'une base de données.
 ## Technologies Utilisées
