@@ -3,6 +3,9 @@ import {Book} from '../Model/Book';
 import './BookModal.css';
 import axios from "axios";
 import {Rating} from "@smastrom/react-rating";
+import {button} from "../styled-system/recipes";
+import {css} from "../styled-system/css";
+
 
 interface BookModalProps {
     isOpen: boolean;
@@ -45,10 +48,10 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
         <div className="modal-overlay" onClick={onRequestClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h2>{book.title}</h2>
+                    <h1 className={css({textStyle: 'h3'})}>{book.title}</h1>
 
                     <Rating style={{maxWidth: 100}} value={book.rating}/>
-                    <button className="modal-close" onClick={onRequestClose}>X</button>
+                    <button className={button({variant: "closeButton"})} onClick={onRequestClose}>X</button>
                 </div>
                 <div className="modal-body">
                     <div className="modal-image">
@@ -64,7 +67,7 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="modal-delete" onClick={handleDelete}>Delete</button>
+                    <button className={button({variant: "outlined"})} onClick={handleDelete}>Delete</button>
                 </div>
             </div>
         </div>

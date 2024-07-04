@@ -1,19 +1,20 @@
 import React from 'react';
 import BookCatalog from "./Organism/BookCatalog";
-import './App.css';
 import '@smastrom/react-rating/style.css'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import CreateBookForm from "./Organism/CreateBookForm";
+import './styled-system/styles.css'
+import "./App.css"
 
 function App() {
     return (
         <BrowserRouter>
-            <div className="app-container">
-                <Routes>
-                    <Route path="/" element={<BookCatalog/>}/>
-                    <Route path="/create-book" element={<CreateBookForm/>}/>
-                </Routes>
-            </div>
+
+            <Routes>
+                <Route path="/" element={<BookCatalog/>}/>
+                <Route path="/create-book" element={<CreateBookForm/>}/>
+            </Routes>
+
         </BrowserRouter>
     );
 }

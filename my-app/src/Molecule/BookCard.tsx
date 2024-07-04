@@ -2,6 +2,7 @@ import React from 'react';
 import {Book} from '../Model/Book';
 import './BookCard.css';
 import {Rating} from '@smastrom/react-rating'
+import {css} from "../styled-system/css";
 
 interface BookCardProps {
     book: Book;
@@ -12,7 +13,7 @@ const BookCard: React.FC<BookCardProps> = ({book}) => {
         <div key={book.id} className="book-card">
             <img src={book.imageUrl} alt={book.title} style={{maxWidth: '200px'}}/>
 
-            <h3>{book.title}</h3>
+            <h3 className={css({textStyle: 'h3'})}>{book.title}</h3>
 
             <Rating style={{maxWidth: 100}} value={book.rating}/>
 
