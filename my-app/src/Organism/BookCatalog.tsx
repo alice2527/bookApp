@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Book} from "../Model/Book";
-import './BookCatalog.css'
 import BookCard from "../Molecule/BookCard";
 import {useNavigate} from "react-router-dom";
 import BookModal from "../Molecule/BookModal";

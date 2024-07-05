@@ -1,6 +1,5 @@
 import React from 'react';
 import {Book} from '../Model/Book';
-import './BookCard.css';
 import {Rating} from '@smastrom/react-rating'
 import {css} from "../../styled-system/css";
 

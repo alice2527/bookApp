@@ -1,6 +1,7 @@
 import {defineConfig, defineGlobalStyles, defineTextStyles} from "@pandacss/dev";
 import {buttonRecipe} from "./src/theme/recipe/button.recipe";
 import {inputRecipe} from "./src/theme/recipe/input.recipte";
+import {modalRecipe} from "./src/theme/recipe/modal.recipe";
 
 export const textStyles = defineTextStyles({
     body: {
@@ -86,6 +87,7 @@ export default defineConfig({
             recipes: {
                 button: buttonRecipe,
                 input: inputRecipe,
+                modal: modalRecipe
             }
         }
     },
