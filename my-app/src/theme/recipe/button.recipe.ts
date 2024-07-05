@@ -17,14 +17,14 @@ export const buttonRecipe = defineRecipe({
     variants: {
         variant: {
             primary: {
-                bg: 'secondary',
+                bg: {base: "secondary", _hover: "primary"},
                 color: "white",
 
             },
             outlined: {
                 paddingInline: "1rem",
-                bg: "white",
-                color: "danger",
+                bg: {base: "white", _hover: "danger"},
+                color: {base: "danger", _hover: "white"},
                 borderColor: "danger",
                 border: "2px solid",
             },

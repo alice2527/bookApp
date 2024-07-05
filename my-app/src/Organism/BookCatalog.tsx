@@ -6,8 +6,10 @@ import {useNavigate} from "react-router-dom";
 import BookModal from "../Molecule/BookModal";
 import {button} from "../../styled-system/recipes";
 import {css} from "../../styled-system/css";
+import Spinner from "../Atom/spinner";
 
 const BookCatalog: React.FC = () => {
+    const [status, setStatus] = useState("loading")
     const navigate = useNavigate();
     const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -17,6 +19,7 @@ const BookCatalog: React.FC = () => {
         try {
             const response = await axios.get<Book[]>('http://localhost:8080/api/books');
             setBooks(response.data);
+            setStatus("loaded")
         } catch (error) {
             console.error('Error fetching books:', error);
         }
@@ -46,7 +49,7 @@ const BookCatalog: React.FC = () => {
     };
 
     return (
-        <div className={css({maxWidth: "80rem", margin: "auto"})}>
+        status === "loaded" ? <div className={css({maxWidth: "80rem", margin: "auto"})}>
             <button onClick={handleCreateBook} className={button({variant: "outlined"})}>Create New Book</button>
             <div className={css({
                 display: "grid",
@@ -56,8 +59,6 @@ const BookCatalog: React.FC = () => {
                     lg: "repeat(3, 1fr)"
                 },
                 alignItems: "center",
-                justifyContent: "center",
-                minHeight: "100vh",
                 margin: "auto"
             })}>
                 {books.map((book) => (
@@ -68,7 +69,15 @@ const BookCatalog: React.FC = () => {
             </div>
             <BookModal isOpen={modalIsOpen} onRequestClose={closeModal} bookId={selectedBookId}
                        onBookDeleted={handleBookDeleted}/>
-        </div>
+        </div> : <div className={css({
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            width: "100%",
+            margin: "auto"
+        })}><Spinner/></div>
+
     );
 };
 

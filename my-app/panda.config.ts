@@ -4,54 +4,56 @@ import {inputRecipe} from "./src/theme/recipe/input.recipte";
 import {modalRecipe} from "./src/theme/recipe/modal.recipe";
 
 export const textStyles = defineTextStyles({
-    body: {
+    paragraph: {
         description: 'The body text style - used in paragraphs',
         value: {
             fontFamily: 'Inter',
             fontWeight: '500',
             fontSize: '16px',
-            lineHeight: '24',
+            lineHeight: '24px',
             letterSpacing: '0',
-            textDecoration: 'None',
-            textTransform: 'None'
+            textDecoration: 'none',
+            textTransform: 'none',
         },
-        title: {
-            description: 'Heading 1 style',
-            value: {
-                fontFamily: 'Inter',
-                fontWeight: '700',
-                fontSize: '32px',
-                lineHeight: '40px',
-                letterSpacing: '-0.5px',
-                textDecoration: 'none',
-                textTransform: 'none'
-            }
-        }, subHeading: {
-            description: 'Heading 2 style',
-            value: {
-                fontFamily: 'Inter',
-                fontWeight: '700',
-                fontSize: '28px',
-                lineHeight: '36px',
-                letterSpacing: '-0.25px',
-                textDecoration: 'none',
-                textTransform: 'none'
-            }
+    },
+    h1: {
+        description: 'Heading 1 style',
+        value: {
+            fontFamily: 'Inter',
+            fontWeight: '700',
+            fontSize: '32px',
+            lineHeight: '40px',
+            letterSpacing: '-0.5px',
+            textDecoration: 'none',
+            textTransform: 'none',
         },
-        heading3: {
-            description: 'Heading 3 style',
-            value: {
-                fontFamily: 'Inter',
-                fontWeight: '700',
-                fontSize: '24px',
-                lineHeight: '32px',
-                letterSpacing: '0',
-                textDecoration: 'none',
-                textTransform: 'none'
-            }
+    },
+    h2: {
+        description: 'Heading 2 style',
+        value: {
+            fontFamily: 'Inter',
+            fontWeight: '700',
+            fontSize: '28px',
+            lineHeight: '36px',
+            letterSpacing: '-0.25px',
+            textDecoration: 'none',
+            textTransform: 'none',
         },
-    }
-})
+    },
+    h3: {
+        description: 'Heading 3 style',
+        value: {
+            fontFamily: 'Inter',
+            fontWeight: '700',
+            fontSize: '24px',
+            lineHeight: '32px',
+            letterSpacing: '0',
+            textDecoration: 'none',
+            textTransform: 'none',
+        },
+    },
+});
+
 const globalCss = defineGlobalStyles({
     'html, body': {
         height: "100%",

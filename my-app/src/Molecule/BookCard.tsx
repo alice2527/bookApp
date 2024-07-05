@@ -27,7 +27,7 @@ const BookCard: React.FC<BookCardProps> = ({book}) => {
 
             <h3 className={css({textStyle: 'heading3'})}>{book.title}</h3>
 
-            <Rating style={{maxWidth: 100}} value={book.rating}/>
+            <Rating style={{maxWidth: 100}} value={book.rating} readOnly={true}/>
 
             <div>Author: {book.author}</div>
             <div>Publisher: {book.publisher}</div>

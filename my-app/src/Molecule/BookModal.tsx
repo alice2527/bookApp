@@ -50,7 +50,7 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
                 <div className={modal({variant: "header"})}>
                     <h1 className={css({textStyle: 'h3'})}>{book.title}</h1>
 
-                    <Rating style={{maxWidth: 100}} value={book.rating}/>
+                    <Rating style={{maxWidth: 100}} value={book.rating} readOnly={true}/>
                     <button className={button({variant: "primary"})} onClick={onRequestClose}>X</button>
                 </div>
                 <div className={css({display: "flex"})}>
