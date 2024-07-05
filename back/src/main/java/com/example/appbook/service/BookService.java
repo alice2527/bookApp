@@ -38,6 +38,12 @@ public class BookService {
         return books;
     }
 
+    public List<Book> searchBook(String title) {
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
+        System.out.println("Books found for title " + title + ": " + books.size());
+        return books;
+    }
+
     public List<Book> getBookByType(String type) {
         List<Book> books = bookRepository.findByType(type);
         System.out.println("Books found for type " + type + ": " + books.size());
