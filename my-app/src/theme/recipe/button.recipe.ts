@@ -10,12 +10,15 @@ export const buttonRecipe = defineRecipe({
         borderRadius: "4px",
         cursor: "pointer",
         border: "none",
-        color: "white",
+        fontWeight: 'semi-bold',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     variants: {
         variant: {
-            closeButton: {
+            primary: {
                 bg: 'secondary',
+                color: "white",
 
             },
             outlined: {
@@ -24,9 +27,7 @@ export const buttonRecipe = defineRecipe({
                 color: "danger",
                 borderColor: "danger",
                 border: "2px solid",
-                borderRadius: "4px",
-                fontWeight: 'semi-bold',
-            }
+            },
         }
 
 

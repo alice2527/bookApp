@@ -5,6 +5,8 @@ import './BookCatalog.css'
 import BookCard from "../Molecule/BookCard";
 import {useNavigate} from "react-router-dom";
 import BookModal from "../Molecule/BookModal";
+import {button} from "../../styled-system/recipes";
+import {css} from "../../styled-system/css";
 
 const BookCatalog: React.FC = () => {
     const navigate = useNavigate();
@@ -45,9 +47,20 @@ const BookCatalog: React.FC = () => {
     };
 
     return (
-        <div className="book-catalog">
-            <button onClick={handleCreateBook} className="catalog-button">Create New Book</button>
-            <div className="book-catalog-grid">
+        <div className={css({maxWidth: "80rem", margin: "auto"})}>
+            <button onClick={handleCreateBook} className={button({variant: "outlined"})}>Create New Book</button>
+            <div className={css({
+                display: "grid",
+                gridTemplateColumns: {
+                    sm: "repeat(1, 1fr)",
+                    md: "repeat(2, 1fr)",
+                    lg: "repeat(3, 1fr)"
+                },
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "100vh",
+                margin: "auto"
+            })}>
                 {books.map((book) => (
                     <div key={book.id} onClick={() => openModal(book.id)}>
                         <BookCard book={book}/>

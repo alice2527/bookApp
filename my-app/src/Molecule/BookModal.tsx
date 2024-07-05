@@ -3,8 +3,8 @@ import {Book} from '../Model/Book';
 import './BookModal.css';
 import axios from "axios";
 import {Rating} from "@smastrom/react-rating";
-import {button} from "../styled-system/recipes";
-import {css} from "../styled-system/css";
+import {button} from "../../styled-system/recipes";
+import {css} from "../../styled-system/css";
 
 
 interface BookModalProps {
@@ -51,7 +51,7 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
                     <h1 className={css({textStyle: 'h3'})}>{book.title}</h1>
 
                     <Rating style={{maxWidth: 100}} value={book.rating}/>
-                    <button className={button({variant: "closeButton"})} onClick={onRequestClose}>X</button>
+                    <button className={button({variant: "primary"})} onClick={onRequestClose}>X</button>
                 </div>
                 <div className="modal-body">
                     <div className="modal-image">

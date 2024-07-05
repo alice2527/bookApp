@@ -1,5 +1,6 @@
 import {defineConfig, defineGlobalStyles, defineTextStyles} from "@pandacss/dev";
 import {buttonRecipe} from "./src/theme/recipe/button.recipe";
+import {inputRecipe} from "./src/theme/recipe/input.recipte";
 
 export const textStyles = defineTextStyles({
     body: {
@@ -13,7 +14,7 @@ export const textStyles = defineTextStyles({
             textDecoration: 'None',
             textTransform: 'None'
         },
-        h1: {
+        title: {
             description: 'Heading 1 style',
             value: {
                 fontFamily: 'Inter',
@@ -24,7 +25,7 @@ export const textStyles = defineTextStyles({
                 textDecoration: 'none',
                 textTransform: 'none'
             }
-        }, h2: {
+        }, subHeading: {
             description: 'Heading 2 style',
             value: {
                 fontFamily: 'Inter',
@@ -36,7 +37,7 @@ export const textStyles = defineTextStyles({
                 textTransform: 'none'
             }
         },
-        h3: {
+        heading3: {
             description: 'Heading 3 style',
             value: {
                 fontFamily: 'Inter',
@@ -53,7 +54,7 @@ export const textStyles = defineTextStyles({
 const globalCss = defineGlobalStyles({
     'html, body': {
         height: "100%",
-        margin: "5",
+        marginInline: {xs: "0.5rem", sm: "1rem", md: "2rem"},
         backgroundColor: "background",
 
     }
@@ -76,13 +77,15 @@ export default defineConfig({
                 }
             },
             breakpoints: {
+                xs: '348',
                 sm: '640px',
                 md: '768px',
                 lg: '1024px',
                 xl: '1280px',
             },
             recipes: {
-                button: buttonRecipe
+                button: buttonRecipe,
+                input: inputRecipe,
             }
         }
     },

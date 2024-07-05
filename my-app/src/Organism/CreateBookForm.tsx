@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import './CreateBookForm.css';
-
+import {flex, vstack} from '../../styled-system/patterns'
 import {Rating} from "@smastrom/react-rating";
+import {button, input} from "../../styled-system/recipes";
+import {css, cx} from "../../styled-system/css";
 
 const CreateBookForm: React.FC = () => {
     const navigate = useNavigate();
@@ -48,46 +49,55 @@ const CreateBookForm: React.FC = () => {
     };
 
     return (
-        <div className="book-form-container">
+        <div className={vstack({gap: '6'})}>
             <h2>Create New Book</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input type="text" name="title" value={bookData.title} onChange={handleChange} required/>
+            <form onSubmit={handleSubmit} className={cx(flex({direction: 'column', gap: "1rem"}), css({
+                bg: "white",
+                w: "40%",
+                padding: "1rem"
+            }))}>
+                <label>Title</label>
+                <input type="text" className={input({variant: "text"})} name="title" value={bookData.title}
+                       onChange={handleChange} required/>
+
+                <label>Author</label>
+                <input type="text" className={input({variant: "text"})} name="author" value={bookData.author}
+                       onChange={handleChange} required/>
+
+                <label>Publisher</label>
+                <input type="text" className={input({variant: "text"})} name="publisher" value={bookData.publisher}
+                       onChange={handleChange}/>
+
+                <label>Published Date</label>
+                <input type="date" className={input({variant: "text"})} name="publishedDate"
+                       value={bookData.publishedDate} onChange={handleChange}/>
 
 
-                <label>Author:</label>
-                <input type="text" name="author" value={bookData.author} onChange={handleChange} required/>
+                <label>ISBN</label>
+                <input type="text" className={input({variant: "text"})} name="isbn" value={bookData.isbn}
+                       onChange={handleChange}/>
 
 
-                <label>Publisher:</label>
-                <input type="text" name="publisher" value={bookData.publisher} onChange={handleChange}/>
+                <label>Type</label>
+                <input type="text" className={input({variant: "text"})} name="type" value={bookData.type}
+                       onChange={handleChange}/>
 
 
-                <label>Published Date:</label>
-                <input type="date" name="publishedDate" value={bookData.publishedDate} onChange={handleChange}/>
+                <label>Image URL</label>
+                <input type="text" className={input({variant: "text"})} name="imageUrl" value={bookData.imageUrl}
+                       onChange={handleChange}/>
 
 
-                <label>ISBN:</label>
-                <input type="text" name="isbn" value={bookData.isbn} onChange={handleChange}/>
-
-
-                <label>Type:</label>
-                <input type="text" name="type" value={bookData.type} onChange={handleChange}/>
-
-
-                <label>Image URL:</label>
-                <input type="text" name="imageUrl" value={bookData.imageUrl} onChange={handleChange}/>
-
-
-                <label>Rating:</label>
+                <label>Rating</label>
                 <Rating onChange={handleRatingChange} value={bookData.rating} style={{maxWidth: 250}}/>
 
 
                 <label>Description:</label>
-                <textarea name="description" value={bookData.description} onChange={handleChange}/>
+                <textarea name="description" className={input({variant: "text"})} value={bookData.description}
+                          onChange={handleChange}/>
 
 
-                <button type="submit">Save Book</button>
+                <button type="submit" className={button({variant: "outlined"})}>Save Book</button>
             </form>
         </div>
     );
