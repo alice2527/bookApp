@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import CreateBookForm from "./Organism/CreateBookForm";
 import '../styled-system/styles.css'
 import "./App.css"
+import UpdateForm from "./Organism/UpdateForm";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<BookCatalog/>}/>
                 <Route path="/create-book" element={<CreateBookForm/>}/>
+                <Route path="/update-book/:bookId" element={<UpdateForm/>}/>
             </Routes>
 
         </BrowserRouter>

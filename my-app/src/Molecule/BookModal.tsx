@@ -4,7 +4,9 @@ import axios from "axios";
 import {Rating} from "@smastrom/react-rating";
 // @ts-ignore
 import {button, modal} from "../../styled-system/recipes";
-import {css} from "../../styled-system/css";
+import {css, cx} from "../../styled-system/css";
+import {hstack} from "../../styled-system/patterns";
+import {useNavigate} from "react-router-dom";
 
 
 interface BookModalProps {
@@ -16,7 +18,7 @@ interface BookModalProps {
 
 const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, onBookDeleted}) => {
     const [book, setBook] = useState<Book | null>(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchBook = async () => {
             if (bookId && isOpen) {
@@ -30,7 +32,9 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
         };
         fetchBook();
     }, [bookId, isOpen]);
-
+    const handleUpdate = () => {
+        navigate(`/update-book/${bookId}`)
+    };
     const handleDelete = async () => {
         if (bookId) {
             try {
@@ -71,8 +75,10 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
                         <div>Description: {book.description}</div>
                     </div>
                 </div>
-                <div className={modal({variant: "footer"})}>
+                <div className={cx(modal({variant: "footer"}), hstack({gap: "1rem"}))}>
+                    <button className={button({variant: "primary"})} onClick={handleUpdate}>Update</button>
                     <button className={button({variant: "outlined"})} onClick={handleDelete}>Delete</button>
+
                 </div>
             </div>
         </div>
