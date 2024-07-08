@@ -3,10 +3,11 @@ import {Book} from '../Model/Book';
 import {useNavigate} from 'react-router-dom';
 import BookCard from '../Molecule/BookCard';
 import BookModal from '../Molecule/BookModal';
-import {fetchBooks} from '../service/service';
-import {flex, hstack} from '../../styled-system/patterns';
+import {fetchBooks, fetchFilterOption} from '../service/service';
+import {hstack} from '../../styled-system/patterns';
 import {css} from '../../styled-system/css';
 import {button} from '../../styled-system/recipes';
+import SidebarFilter from "../Molecule/sidebarFilter";
 import SearchBar from "../Atom/searchBar";
 import Spinner from "../Atom/spinner";
 
@@ -27,6 +28,7 @@ const BookCatalog: React.FC = () => {
     const [types, setTypes] = useState<string[]>([]);
     const [authors, setAuthors] = useState<string[]>([]);
     const [publishers, setPublishers] = useState<string[]>([]);
+
     const fetchFilterOptions = async () => {
         try {
             const fetchedTypes = await fetchFilterOption('types');
@@ -40,24 +42,10 @@ const BookCatalog: React.FC = () => {
             console.error('Error fetching filter options:', error);
         }
     };
+
     useEffect(() => {
-        // Fetch filter options (types, authors, publishers)
-
-
         fetchFilterOptions();
     }, []);
-
-    const fetchFilterOption = async (option: string): Promise<string[]> => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/books/${option}`);
-            const data = await response.json();
-
-            return data.map((item: any) => item.toLowerCase());
-        } catch (error) {
-            console.error(`Error fetching ${option} options:`, error);
-            return [];
-        }
-    };
 
     const fetchAndSetBooks = async (filters: any) => {
         try {
@@ -118,82 +106,18 @@ const BookCatalog: React.FC = () => {
     };
 
     return (
-        status === "loaded" ?
+        status === "loaded" ? (
             <div className={css({maxWidth: '80rem', margin: 'auto', display: 'flex'})}>
 
-                <div className={css({width: '20%', padding: '1rem', borderRight: '1px solid #ccc'})}>
-                    <h3>Filters</h3>
+                <SidebarFilter
+                    authors={authors}
+                    types={types}
+                    publishers={publishers}
+                    filters={filters}
+                    onFilterChange={handleFilterChange}
+                    onCheckboxChange={handleCheckboxChange}
+                />
 
-                    <h4>Type</h4>
-
-                    <div className={flex({gap: '0.5rem', direction: 'column'})}>
-                        {types.map((type, index) => (
-                            <label key={index}>
-                                <input
-                                    type="checkbox"
-                                    name="type"
-                                    value={type}
-                                    onChange={handleCheckboxChange}
-                                />
-                                {type}
-                            </label>
-                        ))}
-                    </div>
-                    <h4>Author</h4>
-
-                    <div className={flex({gap: '0.5rem', direction: 'column'})}>
-                        {authors.map((author, index) => (
-                            <label key={index}>
-                                <input
-                                    type="checkbox"
-                                    name="author"
-                                    value={author}
-                                    onChange={handleCheckboxChange}
-                                />
-                                {author}
-                            </label>
-                        ))}
-                    </div>
-                    <h4>Publisher</h4>
-                    <div className={flex({gap: '0.5rem', direction: 'column'})}>
-                        {publishers.map((publisher, index) => (
-                            <label key={index}>
-                                <input
-                                    type="checkbox"
-                                    name="publisher"
-                                    value={publisher}
-                                    onChange={handleCheckboxChange}
-                                />
-                                {publisher}
-                            </label>
-                        ))}
-                    </div>
-                    <h4>Rating Range</h4>
-                    <label>
-                        Min Rating: {filters.ratingMin}
-                        <input
-                            type="range"
-                            name="ratingMin"
-                            min="0"
-                            max="5"
-                            value={filters.ratingMin}
-                            onChange={handleFilterChange}
-                        />
-                    </label>
-                    <label>
-                        Max Rating: {filters.ratingMax}
-                        <input
-                            type="range"
-                            name="ratingMax"
-                            min="0"
-                            max="5"
-                            value={filters.ratingMax}
-                            onChange={handleFilterChange}
-                        />
-                    </label>
-                </div>
-
-                {/* Main Content */}
                 <div className={css({flex: 1})}>
                     <div className={hstack({gap: '2rem'})}>
                         <button onClick={handleCreateBook} className={button({variant: 'outlined'})}>
@@ -222,16 +146,19 @@ const BookCatalog: React.FC = () => {
                     <BookModal isOpen={modalIsOpen} onRequestClose={closeModal} bookId={selectedBookId}
                                onBookDeleted={handleBookDeleted}/>
                 </div>
-            </div> : <div className={css({
+            </div>
+        ) : (
+            <div className={css({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100%",
+                height: "100vh",
                 width: "100%",
                 margin: "auto"
             })}>
                 <Spinner/>
             </div>
+        )
     );
 };
 

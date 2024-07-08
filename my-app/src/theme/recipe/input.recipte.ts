@@ -29,6 +29,34 @@ export const inputRecipe = defineRecipe({
                 transitionProperty: "width, border-radius",
                 zIndex: "1",
                 position: "relative",
+            },
+            checkbox: {
+                appearance: "none",
+                backgroundColor: "#fff",
+                margin: "0",
+                color: 'danger',
+                width: "1.15em",
+                height: "1.15em",
+                border: "0.1rem solid",
+                borderColor: "danger",
+                borderRadius: " 0.15em",
+                transform: "translateY(-0.075em)",
+                display: "grid",
+                placeContent: "center",
+                '&::before': {
+                    content: "''",
+                    width: "0.65em",
+                    height: "0.65em",
+                    transform: "scale(0)",
+                    transition: "120ms transform ease-in-out",
+                    boxShadow: "inset 1em 1em #E91E63",
+                    backgroundColor: 'secondary',
+                    clipPath: "polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%)",
+                    transformOrigin: "left top",
+                },
+                '&:checked::before': {
+                    transform: "scale(1)"
+                }
             }
 
         }

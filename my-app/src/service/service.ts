@@ -24,6 +24,11 @@ export const fetchBook = async (bookId: number): Promise<Book> => {
     return response.data;
 };
 
+export const fetchFilterOption = async (option: string): Promise<string[]> => {
+    const response = await axios.get<string[]>(`${API_URL}/${option}`);
+    return response.data;
+};
+
 export const updateBook = async (bookId: number, bookData: Partial<Book>): Promise<Book> => {
     const response = await axios.put<Book>(`${API_URL}/${bookId}`, bookData);
     return response.data;
