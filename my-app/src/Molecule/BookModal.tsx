@@ -1,36 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {Book} from '../Model/Book';
-import axios from "axios";
 import {Rating} from "@smastrom/react-rating";
 // @ts-ignore
 import {button, modal} from "../../styled-system/recipes";
 import {css, cx} from "../../styled-system/css";
 import {hstack} from "../../styled-system/patterns";
 import {useNavigate} from "react-router-dom";
+import {deleteBook, fetchBook} from "../service/service";
 
 
 interface BookModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
     bookId: number | null;
-    onBookDeleted: () => void; // Callback function for when a book is deleted
+    onBookDeleted: () => void;
 }
 
 const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, onBookDeleted}) => {
     const [book, setBook] = useState<Book | null>(null);
     const navigate = useNavigate();
     useEffect(() => {
-        const fetchBook = async () => {
+        const fetchandSetBook = async () => {
             if (bookId && isOpen) {
                 try {
-                    const response = await axios.get<Book>(`http://localhost:8080/api/books/${bookId}`);
-                    setBook(response.data);
+                    const fetchedBook = await fetchBook(bookId);
+                    setBook(fetchedBook);
                 } catch (error) {
                     console.error('Error fetching book:', error);
                 }
             }
         };
-        fetchBook();
+        fetchandSetBook();
     }, [bookId, isOpen]);
     const handleUpdate = () => {
         navigate(`/update-book/${bookId}`)
@@ -38,8 +38,8 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
     const handleDelete = async () => {
         if (bookId) {
             try {
-                await axios.delete(`http://localhost:8080/api/books/${bookId}`);
-                onBookDeleted(); // Call the callback function to update the book list
+                await deleteBook(bookId);
+                onBookDeleted();
             } catch (error) {
                 console.error('Error deleting book:', error);
             }

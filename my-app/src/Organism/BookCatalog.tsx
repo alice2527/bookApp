@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 import {Book} from "../Model/Book";
 import BookCard from "../Molecule/BookCard";
-import {useNavigate} from "react-router-dom";
 import BookModal from "../Molecule/BookModal";
 import {button} from "../../styled-system/recipes";
 import {css} from "../../styled-system/css";
 import Spinner from "../Atom/spinner";
 import SearchBar from "../Atom/searchBar";
 import {hstack} from "../../styled-system/patterns";
+import {fetchBooks} from "../service/service";
 
 const BookCatalog: React.FC = () => {
     const [status, setStatus] = useState("loading");
@@ -18,10 +18,10 @@ const BookCatalog: React.FC = () => {
     const [books, setBooks] = useState<Book[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const fetchBooks = async (searchTerm: string = "") => {
+    const fetchAndSetBooks = async (searchTerm: string = "") => {
         try {
-            const response = await axios.get<Book[]>(`http://localhost:8080/api/books${searchTerm ? `/search/${searchTerm}` : ''}`);
-            setBooks(response.data);
+            const fetchedBooks = await fetchBooks(searchTerm);
+            setBooks(fetchedBooks);
             setStatus("loaded");
         } catch (error) {
             console.error('Error fetching books:', error);
@@ -30,19 +30,19 @@ const BookCatalog: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchBooks();
+        fetchAndSetBooks();
     }, []);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
-            fetchBooks(searchTerm);
+            fetchAndSetBooks(searchTerm);
         }, 300);
 
         return () => clearTimeout(delayDebounceFn);
     }, [searchTerm]);
 
     const handleCreateBook = () => {
-        navigate('/create-book'); // Redirect to the create book page
+        navigate('/create-book');
     };
 
     const openModal = (id: number) => {
@@ -57,7 +57,7 @@ const BookCatalog: React.FC = () => {
 
     const handleBookDeleted = () => {
         closeModal();
-        fetchBooks(); // Refresh the book list after a book is deleted
+        fetchAndSetBooks(searchTerm);
     };
 
     const handleSearch = (term: string) => {
@@ -65,39 +65,51 @@ const BookCatalog: React.FC = () => {
     };
 
     return (
-        status === "loaded" ? <div className={css({maxWidth: "80rem", margin: "auto"})}>
-            <div className={hstack({gap: "2rem"})}>
-                <button onClick={handleCreateBook} className={button({variant: "outlined"})}>Create New Book</button>
-                <SearchBar onSearch={handleSearch}/>
+        status === "loaded" ? (
+            <div className={css({maxWidth: "80rem", margin: "auto"})}>
+                <div className={hstack({gap: "2rem"})}>
+                    <button onClick={handleCreateBook} className={button({variant: "outlined"})}>
+                        Create New Book
+                    </button>
+                    <SearchBar onSearch={handleSearch}/>
+                </div>
+                <div className={css({
+                    display: "grid",
+                    gridTemplateColumns: {
+                        sm: "repeat(1, 1fr)",
+                        md: "repeat(2, 1fr)",
+                        lg: "repeat(3, 1fr)"
+                    },
+                    alignItems: "center",
+                    margin: "auto"
+                })}>
+                    {books.map((book) => (
+                        <div key={book.id} onClick={() => openModal(book.id)}>
+                            <BookCard book={book}/>
+                        </div>
+                    ))}
+                </div>
+                <BookModal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    bookId={selectedBookId}
+                    onBookDeleted={handleBookDeleted}
+                />
             </div>
+        ) : status === "error" ? (
+            <div>Error loading books.</div>
+        ) : (
             <div className={css({
-                display: "grid",
-                gridTemplateColumns: {
-                    sm: "repeat(1, 1fr)",
-                    md: "repeat(2, 1fr)",
-                    lg: "repeat(3, 1fr)"
-                },
+                display: "flex",
+                justifyContent: "center",
                 alignItems: "center",
+                height: "100vh",
+                width: "100%",
                 margin: "auto"
             })}>
-
-                {books.map((book) => (
-                    <div key={book.id} onClick={() => openModal(book.id)}>
-                        <BookCard book={book}/>
-                    </div>
-                ))}
+                <Spinner/>
             </div>
-            <BookModal isOpen={modalIsOpen} onRequestClose={closeModal} bookId={selectedBookId}
-                       onBookDeleted={handleBookDeleted}/>
-        </div> : status === "error" ? <div>Error loading books.</div> : <div className={css({
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            width: "100%",
-            margin: "auto"
-        })}><Spinner/></div>
-
+        )
     );
 };
 

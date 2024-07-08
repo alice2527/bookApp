@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import {flex, vstack} from '../../styled-system/patterns'
 import {Rating} from "@smastrom/react-rating";
 import {button, input} from "../../styled-system/recipes";
 import {css, cx} from "../../styled-system/css";
+import {createBook} from "../service/service";
 
 const CreateBookForm: React.FC = () => {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const CreateBookForm: React.FC = () => {
         setRating(rate)
         setBookData({
             ...bookData,
-            rating: rate, // Convert back to a scale of 1-5
+            rating: rate,
         });
     };
 
@@ -40,13 +40,14 @@ const CreateBookForm: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/books', bookData);
-            console.log('Book created:', response.data);
+            const response = await createBook(bookData);
+            console.log('Book created:', response);
             navigate('/');
         } catch (error) {
             console.error('Error creating book:', error);
         }
     };
+
 
     return (
         <div className={vstack({gap: '6'})}>

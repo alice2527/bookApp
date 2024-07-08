@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
 import {useNavigate, useParams} from 'react-router-dom';
 import {flex, vstack} from '../../styled-system/patterns';
 import {Rating} from "@smastrom/react-rating";
 import {button, input} from "../../styled-system/recipes";
 import {css, cx} from "../../styled-system/css";
-import {Book} from "../Model/Book";
 import Spinner from "../Atom/spinner";
+import {fetchBook, updateBook} from "../service/service";
 
 const UpdateForm: React.FC = () => {
     const navigate = useNavigate();
     const {bookId} = useParams<{ bookId: string }>();
 
     const [status, setStatus] = useState("loading");
-    const [book, setBook] = useState<Book | null>(null);
     const [rating, setRating] = useState(0);
     const [bookData, setBookData] = useState({
         title: "",
@@ -28,12 +26,10 @@ const UpdateForm: React.FC = () => {
     });
 
     useEffect(() => {
-        const fetchBook = async () => {
+        const fetchAndSetBook = async () => {
             if (bookId) {
                 try {
-                    const response = await axios.get<Book>(`http://localhost:8080/api/books/${bookId}`);
-                    const fetchedBook = response.data;
-                    setBook(fetchedBook);
+                    const fetchedBook = await fetchBook(Number(bookId));
                     const formattedPublishedDate = fetchedBook.publishedDate
                         ? new Date(fetchedBook.publishedDate).toISOString().split('T')[0]
                         : "";
@@ -56,7 +52,7 @@ const UpdateForm: React.FC = () => {
                 }
             }
         };
-        fetchBook();
+        fetchAndSetBook();
     }, [bookId]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -78,8 +74,8 @@ const UpdateForm: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:8080/api/books/${bookId}`, bookData);
-            console.log('Book updated:', response.data);
+            const updatedBook = await updateBook(Number(bookId!), bookData);
+            console.log('Book updated:', updatedBook);
             navigate('/');
         } catch (error) {
             console.error('Error updating book:', error);
