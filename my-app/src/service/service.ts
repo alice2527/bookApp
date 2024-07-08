@@ -3,10 +3,19 @@ import {Book} from '../Model/Book';
 
 const API_URL = 'http://localhost:8080/api/books';
 
-export const fetchBooks = async (searchTerm: string = ""): Promise<Book[]> => {
-    const response = await axios.get<Book[]>(`${API_URL}`, {
-        params: {search: searchTerm}
+export const fetchBooks = async (filters: {
+    searchTerm?: string;
+    type?: string;
+    author?: string;
+    ratingMin?: number;
+    ratingMax?: number;
+    publisher?: string
+} = {}): Promise<Book[]> => {
+    console.log(filters)
+    const response = await axios.get<Book[]>(API_URL, {
+        params: filters,
     });
+    console.log(response.data)
     return response.data;
 };
 

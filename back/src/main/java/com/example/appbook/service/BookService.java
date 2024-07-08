@@ -3,6 +3,7 @@ package com.example.appbook.service;
 import com.example.appbook.model.Book;
 import com.example.appbook.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,42 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> getAllBooks(String searchTerm, String type, String author, Double ratingMin, Double ratingMax, String publisher) {
+        Specification<Book> spec = Specification.where(null);
+
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            spec = spec.and(BookSpecifications.hasTitle(searchTerm));
+        }
+
+        if (type != null && !type.isEmpty()) {
+            spec = spec.and(BookSpecifications.hasType(type));
+        }
+
+        if (author != null && !author.isEmpty()) {
+            spec = spec.and(BookSpecifications.hasAuthor(author));
+        }
+
+        if (publisher != null && !publisher.isEmpty()) {
+            spec = spec.and(BookSpecifications.hasPublisher(publisher));
+        }
+
+        if (ratingMin != null && ratingMax != null) {
+            spec = spec.and(BookSpecifications.hasRatingBetween(ratingMin, ratingMax));
+        }
+
+        return bookRepository.findAll(spec);
+    }
+
+    public List<String> getAllPublishers() {
+        return bookRepository.findAllPublishers();
+    }
+
+    public List<String> getAllTypes() {
+        return bookRepository.findAllTypes();
+    }
+
+    public List<String> getAllAuthors() {
+        return bookRepository.findAllAuthors();
     }
 
     public List<Book> getAllBooksSortByRatings(String asc) {
@@ -27,6 +62,7 @@ public class BookService {
             return bookRepository.findAllByOrderByRatingAsc();
         }
     }
+
 
     public Book getBookById(Long id) {
         return bookRepository.findById(id).orElse(null);

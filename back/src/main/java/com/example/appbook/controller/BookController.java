@@ -16,14 +16,36 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    public List<Book> getAllBooks(
+            @RequestParam(required = false) String searchTerm,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) Double ratingMin,
+            @RequestParam(required = false) Double ratingMax,
+            @RequestParam(required = false) String publisher) {
+        return bookService.getAllBooks(searchTerm, type, author, ratingMin, ratingMax, publisher);
     }
 
     @GetMapping("/sortedByRating/{asc}")
     public List<Book> getAllBooksByRating(@PathVariable String asc) {
         return bookService.getAllBooksSortByRatings(asc);
     }
+
+    @GetMapping("/types")
+    public List<String> getAllTypes() {
+        return bookService.getAllTypes();
+    }
+
+    @GetMapping("/publishers")
+    public List<String> getAllPublishers() {
+        return bookService.getAllPublishers();
+    }
+
+    @GetMapping("/authors")
+    public List<String> getAllAuthors() {
+        return bookService.getAllAuthors();
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
