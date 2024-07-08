@@ -52,7 +52,7 @@ const BookModal: React.FC<BookModalProps> = ({isOpen, onRequestClose, bookId, on
         <div className={modal({variant: "overlay"})} onClick={onRequestClose}>
             <div className={modal({variant: "content"})} onClick={(e) => e.stopPropagation()}>
                 <div className={modal({variant: "header"})}>
-                    <h1 className={css({textStyle: 'h3'})}>{book.title}</h1>
+                    <h1 className={css({fontWeight: "bold"})}>{book.title}</h1>
 
                     <Rating style={{maxWidth: 100}} value={book.rating} readOnly={true}/>
                     <button className={button({variant: "primary"})} onClick={onRequestClose}>X</button>

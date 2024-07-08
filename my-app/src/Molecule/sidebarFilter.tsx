@@ -28,9 +28,9 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
                                                      }) => {
     return (
         <div className={css({width: '20%', padding: '1rem', bgColor: 'white', height: "100vh", position: 'sticky'})}>
-            <h3>Filters</h3>
+            <h3 className={css({fontWeight: "bold", fontSize: 'large'})}>Filters</h3>
 
-            <h4>Type</h4>
+            <h4 className={css({fontWeight: "bold"})}>Type</h4>
 
             <div className={flex({gap: '0.5rem', direction: 'column'})}>
                 {types.map((type, index) => (
@@ -47,7 +47,7 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
                     </label>
                 ))}
             </div>
-            <h4>Author</h4>
+            <h4 className={css({fontWeight: "bold"})}>Author</h4>
 
             <div className={flex({gap: '0.5rem', direction: 'column'})}>
                 {authors.map((author, index) => (
@@ -64,7 +64,7 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
                     </label>
                 ))}
             </div>
-            <h4>Publisher</h4>
+            <h4 className={css({fontWeight: "bold"})}>Publisher</h4>
             <div className={flex({gap: '0.5rem', direction: 'column'})}>
                 {publishers.map((publisher, index) => (
                     <label key={index} className={hstack({gap: "0.5rem"})}>
@@ -80,7 +80,7 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
                     </label>
                 ))}
             </div>
-            <h4>Rating Range</h4>
+            <h4 className={css({fontWeight: "bold"})}>Rating Range</h4>
             <label>
                 Min Rating: {filters.ratingMin}
                 <input

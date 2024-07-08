@@ -25,7 +25,7 @@ const BookCard: React.FC<BookCardProps> = ({book}) => {
         })}>
             <img src={book.imageUrl} alt={book.title} style={{maxWidth: '12.5rem', height: "18.75rem"}}/>
 
-            <h3 className={css({textStyle: 'heading3'})}>{book.title}</h3>
+            <h3 className={css({fontWeight: "bold"})}>{book.title}</h3>
 
             <Rating style={{maxWidth: 100}} value={book.rating} readOnly={true}/>
 
